@@ -24,7 +24,7 @@
 ## Компоненты
 
 ### SoundEngine
-**Файл:** `core/engine.py`
+**Файл:** `src/core/engine.py`
 **Описание:** Звуковой движок с управлением старт/стоп
 
 **Ключевые методы:**
@@ -42,7 +42,7 @@
 - Поиск свободного звукового канала
 
 ### ExerciseEngine
-**Файл:** `exercises/engine/exercise_engine.py`
+**Файл:** `src/exercises/engine/exercise_engine.py`
 **Описание:** Движок управления упражнениями
 
 **Ключевые методы:**
@@ -59,7 +59,7 @@
 - **harmonic:** Гармонический режим (одновременное воспроизведение)
 
 ### ExerciseOscilloscope
-**Файл:** `exercises/ui/exercise_oscilloscope.py`
+**Файл:** `src/exercises/ui/exercise_oscilloscope.py`
 **Описание:** Осциллограф для упражнений с суженным диапазоном частот
 
 **Ключевые методы:**
@@ -74,7 +74,7 @@
 - Поддержка упражнений и джойстика
 
 ### ExerciseScreen
-**Файл:** `exercises/ui/exercise_screen.py`
+**Файл:** `src/exercises/ui/exercise_screen.py`
 **Описание:** Экран выполнения упражнения
 
 **Ключевые методы:**
@@ -142,31 +142,39 @@
 
 ```
 MusicTrainer/
-├── core/
-│   ├── engine.py - Звуковой движок
-│   ├── timbre.py - Тембры
-├── ui/
-│   ├── widgets.py - Основные виджеты
-│   ├── controls.py - Элементы управления
-├── exercises/
-│   ├── engine/
-│   │   ├── exercise_engine.py - Движок упражнений
+├── src/
+│   ├── main.py - Точка входа
+│   ├── core/
+│   │   ├── engine.py - Звуковой движок
+│   │   ├── mixer.py - AudioMixer
+│   │   ├── statistics.py - Статистика
+│   │   ├── timbre.py - Тембры
 │   ├── ui/
-│   │   ├── exercise_screen.py - Экран упражнений
-│   │   ├── exercise_oscilloscope.py - Осциллограф для упражнений
-│   │   ├── settings_screen.py - Экран настроек
-│   ├── config/
-│   │   ├── settings.py - Настройки
-│   │   ├── settings_manager.py - Менеджер настроек
-│   │   ├── progress_manager.py - Менеджер прогресса
-│   ├── types/
-│   │   ├── melodic.py - Мелодический режим
-│   │   ├── harmonic.py - Гармонический режим
-├── screens/
-│   ├── menu_screen.py - Главное меню
-│   ├── joystick_screen.py - Джойстик
-│   ├── info_screen.py - Информация
-│   ├── debug_screen.py - Отладка
+│   │   ├── widgets.py - Основные виджеты
+│   │   ├── controls.py - Элементы управления
+│   ├── exercises/
+│   │   ├── engine/
+│   │   │   ├── exercise_engine.py - Движок упражнений
+│   │   ├── ui/
+│   │   │   ├── exercise_screen.py - Экран упражнений
+│   │   │   ├── exercise_oscilloscope.py - Осциллограф для упражнений
+│   │   │   ├── settings_screen.py - Экран настроек
+│   │   │   ├── stats_widget.py - График статистики
+│   │   ├── config/
+│   │   │   ├── settings.py - Настройки
+│   │   │   ├── settings_manager.py - Менеджер настроек
+│   │   │   ├── progress_manager.py - Менеджер прогресса
+│   │   ├── types/
+│   │   │   ├── melodic.py - Мелодический режим
+│   │   │   ├── harmonic.py - Гармонический режим
+│   ├── screens/
+│   │   ├── menu_screen.py - Главное меню
+│   │   ├── joystick_screen.py - Джойстик
+│   │   ├── stats_screen.py - Статистика
+│   │   ├── info_screen.py - Информация
+│   │   ├── debug_screen.py - Отладка
+├── docs/ - Документация
+├── tools/ - Скрипты разработчика
 ```
 
 ---
@@ -181,13 +189,7 @@ MusicTrainer/
 
 ## Установка и запуск
 
-**Платформа:** Android (Pydroid 3)
-
-**Шаги:**
-Установить Pydroid 3
-Установить numpy, pygame
-Скопировать файлы проекта
-Запустить main.py
+Инструкция по запуску на Windows и сборке APK — в [README.md](../README.md).
 
 ---
 

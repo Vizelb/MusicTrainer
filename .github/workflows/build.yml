@@ -14,20 +14,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Unzip project files if needed
+      - name: Check sources
         run: |
-          for zipfile in *.zip; do
-            if [ -f "$zipfile" ]; then
-              echo "📦 Распаковываем $zipfile..."
-              unzip -o "$zipfile" -d ./
-              rm "$zipfile"
-              echo "✅ Архив распакован"
-            fi
-          done
-          if [ -f "main.py" ]; then
-            echo "✅ main.py найден!"
+          if [ -f "src/main.py" ]; then
+            echo "✅ src/main.py найден!"
           else
-            echo "⚠️ main.py не найден"
+            echo "⚠️ src/main.py не найден"
             exit 1
           fi
 

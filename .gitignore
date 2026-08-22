@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+
+.venv/
+venv/
+
+.buildozer/
+bin/
+
+.kivy/
+
+# Пользовательские данные, создаются приложением при работе
+data/
+sessions/

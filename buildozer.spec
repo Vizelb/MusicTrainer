@@ -5,11 +5,11 @@ package.name = musictrainer
 package.domain = org.niknitro
 version = 17.5
 
-source.dir = .
+source.dir = src
 source.include_exts = py,png,jpg,kv,atlas,json,md
 source.exclude_exts = spec,db,pyc,pyo
 source.exclude_dirs = tests, __pycache__, .git, .buildozer, to_delete_backup
-source.include_patterns = data/*, exercises/*, screens/*, core/*, ui/*
+source.include_patterns = exercises/*, screens/*, core/*, ui/*
 
 # ВОЗВРАЩАЕМСЯ К KIVY 2.1.0 И PYTHON 3.10
 requirements = python3==3.10.0,kivy==2.1.0,pygame==2.6.1,numpy
