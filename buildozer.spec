@@ -22,8 +22,11 @@ source.include_patterns = exercises/*, screens/*, core/*, ui/*
 #   'longintrepr.h' file not found: этот заголовок убрали из публичного
 #   API CPython в 3.11. 2.6.1 совпадает с версией на десктопе.
 #
-# Подробности обеих ошибок — в docs/ANDROID.md.
-requirements = python3==3.12.11,kivy,pygame==2.6.1,numpy
+# hostpython3 обязан совпадать по версии с python3, иначе p4a прерывает сборку:
+#   "python3 should have same version as hostpython3, 3.12.11 != 3.14.2"
+#
+# Подробности всех трёх ошибок — в docs/ANDROID.md.
+requirements = hostpython3==3.12.11,python3==3.12.11,kivy,pygame==2.6.1,numpy
 
 # Кастомные рецепты p4a-recipes/ удалены: рецепт kivy 2.3.1 сам настраивает
 # SDL2 и графику под Android, а hostpython3 больше не нужно подменять.
