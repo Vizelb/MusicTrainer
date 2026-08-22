@@ -57,6 +57,14 @@ jobs:
         run: |
           echo "=== последние 120 строк build.log ==="
           tail -n 120 build.log || echo "build.log отсутствует"
+          # Дублируем ключевые строки в annotation: она, в отличие от логов
+          # шагов и артефактов, читается через публичный API без токена —
+          # причину падения видно, не скачивая 7 МБ лога.
+          if [ -f build.log ]; then
+            SUMMARY=$(grep -aE "fatal error|error:|^\[ERROR\]|Build failed|No matching distribution" build.log \
+              | tail -n 12 | cut -c1-220 | tr '\n' '~' | cut -c1-2500)
+            echo "::error title=Причина падения::${SUMMARY}"
+          fi
 
       - name: Upload APK
         if: success()
