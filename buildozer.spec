@@ -12,9 +12,12 @@ source.exclude_dirs = tests, __pycache__, .git, .buildozer, to_delete_backup
 source.include_patterns = exercises/*, screens/*, core/*, ui/*
 
 # ВОЗВРАЩАЕМСЯ К KIVY 2.1.0 И PYTHON 3.10
-requirements = python3==3.10.0,kivy==2.1.0,pygame==2.6.1,numpy
+# pygame намеренно без версии: рецепт p4a собирает только 2.1.0,
+# запрос 2.6.1 подставляет непроверенный рецептом исходник (см. docs/ANDROID.md)
+requirements = python3==3.10.0,kivy==2.1.0,pygame,numpy
 
-hostpython3 = /usr/local/bin/python3.10  # <-- ИЗМЕНЕНО
+# hostpython3 задаётся кастомным рецептом в p4a-recipes/hostpython3/,
+# ключа hostpython3 в buildozer.spec не существует — он игнорировался
 
 p4a.local_recipes = ./p4a-recipes
 
