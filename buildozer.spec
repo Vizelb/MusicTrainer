@@ -36,17 +36,19 @@ orientation = portrait
 android.permissions = INTERNET, VIBRATE, RECORD_AUDIO, MODIFY_AUDIO_SETTINGS, BLUETOOTH, BLUETOOTH_CONNECT, BLUETOOTH_SCAN
 
 android.api = 31
-android.minapi = 24
-android.ndk_api = 24
+# minapi/ndk_api = 26, а не 24: setgrent/getgrent/endgrent появились в Android
+# Bionic только с API 26, а Python 3.12 (в отличие от 3.13+ с поддержкой Android
+# по PEP 738) вызывает их без guard'ов — сборка падает на Modules/grpmodule.c.
+# Цена: минимальная версия Android 8.0 вместо 7.0.
+android.minapi = 26
+android.ndk_api = 26
 # android.sdk — устаревший ключ, buildozer его игнорирует, используется android.api
 android.ndk = 28c
 android.build_tools = 33.0.2
-# Только 64 бита. armeabi-v7a убрана: патчи p4a под 32-битный ARM привязаны
-# к Python 3.14+, а мы закреплены на 3.12 ради pygame — сборка Python падает
-# на grpmodule.c (setgrent/getgrent появились в Bionic только с API 26).
-# Практических потерь нет: Google Play требует 64 бита с 2019 года, все
-# актуальные телефоны (включая OnePlus 9RT) — arm64-v8a. Бонусом вдвое
-# быстрее сборка. См. docs/ANDROID.md.
+# Только 64 бита — осознанный выбор, а не обход ошибки: Google Play требует
+# 64 бита с 2019 года, все актуальные телефоны (включая OnePlus 9RT) — arm64-v8a,
+# и сборка одной архитектуры идёт вдвое быстрее. При необходимости armeabi-v7a
+# можно вернуть, дописав её через запятую.
 android.archs = arm64-v8a
 android.enable_androidx = True
 android.auto_sign = True
