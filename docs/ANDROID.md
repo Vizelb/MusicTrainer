@@ -207,6 +207,34 @@ guard'ами. В 3.12 такой поддержки ещё нет.
 совпадение: после отключения 32 бит ошибка воспроизвелась на `arm64-v8a`
 слово в слово. Дело всегда было в уровне API, а не в разрядности.
 
+### Хостовые SDL2-пакеты ломают сборку kivy
+
+pygame собрался, сборка дошла до последнего рецепта — kivy — и упала там:
+
+```
+/usr/include/x86_64-linux-gnu/sys/cdefs.h:64:6:
+error: function-like macro '__GNUC_PREREQ' is not defined
+```
+
+В команде компиляции `cgl_sdl2` видно источник:
+
+```
+-I/usr/include/SDL2 -I/usr/include/harfbuzz ... -I/usr/include/x86_64-linux-gnu
+```
+
+Kivy спрашивает пути к SDL2 у `pkg-config` и получает хостовые, потому что
+в образе стояли `libsdl2-dev` и родственные пакеты. В результате `<stdlib.h>`
+из NDK тянет `<sys/cdefs.h>`, который резолвится в glibc хоста вместо
+Android-сисрута — а там макросы glibc, которых у clang для Android нет.
+
+Решение: убрать из `Dockerfile` `libsdl2-dev`, `libsdl2-image-dev`,
+`libsdl2-mixer-dev`, `libsdl2-ttf-dev`, `libgl1-mesa-dev`, `portaudio19-dev`.
+
+**Ставить эти пакеты в образ не нужно и вредно.** p4a кросс-компилирует
+собственный SDL2 под Android — он виден в путях сборки как
+`bootstrap_builds/sdl2/jni/SDL/include`. Хостовые копии не используются
+ни для чего, только подмешивают чужие заголовки.
+
 ### Локальная сборка упирается в скорость сети
 
 При медленном канале локальная сборка непрактична: загрузка Android SDK/NDK

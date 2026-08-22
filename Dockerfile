@@ -13,15 +13,19 @@ ENV LANG=C.UTF-8 \
     ANDROID_HOME=/home/builder/.buildozer/android/platform/android-sdk \
     ANDROID_SDK_ROOT=/home/builder/.buildozer/android/platform/android-sdk
 
+# ВАЖНО: здесь намеренно НЕТ libsdl2-dev, libsdl2-{image,mixer,ttf}-dev,
+# libgl1-mesa-dev и portaudio19-dev. Всё это p4a кросс-компилирует сам под
+# Android. Хостовые версии ломают сборку: kivy спрашивает пути у pkg-config,
+# получает -I/usr/include/x86_64-linux-gnu, и заголовок <sys/cdefs.h>
+# резолвится в glibc хоста вместо Android-сисрута:
+#   error: function-like macro '__GNUC_PREREQ' is not defined
+# Подробности — в docs/ANDROID.md.
 RUN apt-get update && apt-get install -y \
     git zip unzip wget curl make \
     default-jdk \
     autoconf libtool pkg-config \
     zlib1g-dev libncurses5-dev libncursesw5-dev \
     cmake libffi-dev libssl-dev \
-    libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev \
-    libgl1-mesa-dev \
-    portaudio19-dev \
     libblas-dev liblapack-dev gfortran \
     patchelf \
     ninja-build \
