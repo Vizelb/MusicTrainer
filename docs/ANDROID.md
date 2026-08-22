@@ -267,11 +267,19 @@ Android-сисрута — а там макросы glibc, которых у cla
 
 ## Что проверено, а что нет
 
-**Собирается под arm64-v8a:** hostpython3, jpeg, libffi, openssl, png, sqlite3,
-SDL2 со всеми модулями (image, mixer, ttf), Python, pyjnius, setuptools, android
-и **numpy** — в логе `Successfully built numpy-2.3.0-cp314-cp314-aarch64_linux_android.whl`.
-Структура `src/` для сборки корректна.
+**APK собирается.** Прогон занимает около 16 минут на раннере GitHub, на выходе
+`bin/musictrainer-17.5-arm64-v8a-debug.apk`, ~30 МБ. Внутри всё, что нужно:
 
-**Не проверено:** компиляция pygame и Kivy под ARM — до них сборка пока не
-доходила. Соответственно неизвестно, собирается ли APK целиком, ставится ли
-он на телефон и работает ли в нём звук.
+| Содержимое | Размер |
+|-----------|--------|
+| `libpybundle.so` (numpy, pygame, kivy и прочее) | 21.8 МБ |
+| `libpython3.12.so` | 6.5 МБ |
+| `libSDL2.so`, `libSDL2_image/mixer/ttf.so` | 8.3 МБ |
+| `libssl`, `libcrypto`, `libsqlite3`, `libffi`, `libpng16` | 7.9 МБ |
+| `assets/private.tar` — код приложения из `src/` | 122 КБ |
+
+Наличие `libSDL2_mixer.so` подтверждает, что звуковой бэкенд pygame попал
+в сборку.
+
+**Не проверено:** устанавливается ли APK на телефон, запускается ли приложение
+и работает ли в нём звук. Всё это проверяется только на живом устройстве.
