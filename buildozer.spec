@@ -11,11 +11,19 @@ source.exclude_exts = spec,db,pyc,pyo
 source.exclude_dirs = tests, __pycache__, .git, .buildozer, to_delete_backup
 source.include_patterns = exercises/*, screens/*, core/*, ui/*
 
-# Версии не пиним — берём те, что закреплены в рецептах p4a:
-#   python3 3.14.2, kivy 2.3.1 (совпадает с десктопом), pygame 2.1.0, numpy 2.3.0
-# Пин python3==3.10.0 убран: numpy собирается через meson-python,
-# который требует Python >= 3.11 (см. docs/ANDROID.md).
-requirements = python3,kivy,pygame,numpy
+# Два пина обязательны, остальное берётся из рецептов p4a (kivy 2.3.1, numpy 2.3.0).
+#
+# python3==3.12.11 — по умолчанию p4a собирает 3.14.2, но pygame под 3.14
+#   не собирается вообще. Верхняя граница pygame — 3.12/3.13.
+#   Нижняя граница — 3.11: numpy собирается через meson-python, который
+#   требует Python >= 3.11. Остаётся окно 3.11-3.13, берём 3.12.
+#
+# pygame==2.6.1 — рецепт p4a пинует 2.1.0 (2021), а он падает на
+#   'longintrepr.h' file not found: этот заголовок убрали из публичного
+#   API CPython в 3.11. 2.6.1 совпадает с версией на десктопе.
+#
+# Подробности обеих ошибок — в docs/ANDROID.md.
+requirements = python3==3.12.11,kivy,pygame==2.6.1,numpy
 
 # Кастомные рецепты p4a-recipes/ удалены: рецепт kivy 2.3.1 сам настраивает
 # SDL2 и графику под Android, а hostpython3 больше не нужно подменять.
