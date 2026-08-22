@@ -26,7 +26,7 @@ source.include_patterns = exercises/*, screens/*, core/*, ui/*
 #   "python3 should have same version as hostpython3, 3.12.11 != 3.14.2"
 #
 # Подробности всех трёх ошибок — в docs/ANDROID.md.
-requirements = hostpython3==3.12.11,python3==3.12.11,kivy,pygame==2.6.1,numpy
+requirements = hostpython3==3.13.9,python3==3.13.9,kivy,pygame==2.6.1,numpy
 
 # Кастомные рецепты p4a-recipes/ удалены: рецепт kivy 2.3.1 сам настраивает
 # SDL2 и графику под Android, а hostpython3 больше не нужно подменять.
