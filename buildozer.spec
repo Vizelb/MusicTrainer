@@ -41,7 +41,13 @@ android.ndk_api = 24
 # android.sdk — устаревший ключ, buildozer его игнорирует, используется android.api
 android.ndk = 28c
 android.build_tools = 33.0.2
-android.archs = arm64-v8a, armeabi-v7a
+# Только 64 бита. armeabi-v7a убрана: патчи p4a под 32-битный ARM привязаны
+# к Python 3.14+, а мы закреплены на 3.12 ради pygame — сборка Python падает
+# на grpmodule.c (setgrent/getgrent появились в Bionic только с API 26).
+# Практических потерь нет: Google Play требует 64 бита с 2019 года, все
+# актуальные телефоны (включая OnePlus 9RT) — arm64-v8a. Бонусом вдвое
+# быстрее сборка. См. docs/ANDROID.md.
+android.archs = arm64-v8a
 android.enable_androidx = True
 android.auto_sign = True
 android.accept_sdk_license = True
