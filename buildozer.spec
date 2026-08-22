@@ -11,15 +11,14 @@ source.exclude_exts = spec,db,pyc,pyo
 source.exclude_dirs = tests, __pycache__, .git, .buildozer, to_delete_backup
 source.include_patterns = exercises/*, screens/*, core/*, ui/*
 
-# ВОЗВРАЩАЕМСЯ К KIVY 2.1.0 И PYTHON 3.10
-# pygame намеренно без версии: рецепт p4a собирает только 2.1.0,
-# запрос 2.6.1 подставляет непроверенный рецептом исходник (см. docs/ANDROID.md)
-requirements = python3==3.10.0,kivy==2.1.0,pygame,numpy
+# Версии не пиним — берём те, что закреплены в рецептах p4a:
+#   python3 3.14.2, kivy 2.3.1 (совпадает с десктопом), pygame 2.1.0, numpy 2.3.0
+# Пин python3==3.10.0 убран: numpy собирается через meson-python,
+# который требует Python >= 3.11 (см. docs/ANDROID.md).
+requirements = python3,kivy,pygame,numpy
 
-# hostpython3 задаётся кастомным рецептом в p4a-recipes/hostpython3/,
-# ключа hostpython3 в buildozer.spec не существует — он игнорировался
-
-p4a.local_recipes = ./p4a-recipes
+# Кастомные рецепты p4a-recipes/ удалены: рецепт kivy 2.3.1 сам настраивает
+# SDL2 и графику под Android, а hostpython3 больше не нужно подменять.
 
 orientation = portrait
 
@@ -28,7 +27,7 @@ android.permissions = INTERNET, VIBRATE, RECORD_AUDIO, MODIFY_AUDIO_SETTINGS, BL
 android.api = 31
 android.minapi = 24
 android.ndk_api = 24
-android.sdk = 33
+# android.sdk — устаревший ключ, buildozer его игнорирует, используется android.api
 android.ndk = 28c
 android.build_tools = 33.0.2
 android.archs = arm64-v8a, armeabi-v7a

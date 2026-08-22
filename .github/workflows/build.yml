@@ -43,13 +43,20 @@ jobs:
               chmod -R 755 /app
               
               # Запускаем сборку от builder
-              su builder -c '
+              su builder -s /bin/bash -c '
+                set -o pipefail
                 cd /app
                 rm -rf .buildozer/ bin/
                 echo \"=== Starting build ===\"
                 buildozer android debug --verbose 2>&1 | tee build.log
               '
             "
+
+      - name: Показать причину падения
+        if: failure()
+        run: |
+          echo "=== последние 120 строк build.log ==="
+          tail -n 120 build.log || echo "build.log отсутствует"
 
       - name: Upload APK
         if: success()
